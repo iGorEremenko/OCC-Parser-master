@@ -1,7 +1,3 @@
-//
-// Created by Ivan Gaydamakin on 2019-08-02.
-// Copyright (c) 2019 Ivan Gaydamakin. All rights reserved.
-//
 
 import Foundation
 
