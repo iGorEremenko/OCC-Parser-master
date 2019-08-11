@@ -400,29 +400,29 @@ private struct innerSettingsNvram: Codable {
 
 private struct innerSettingsNvramLegacySchema: Codable {
     enum CodingKeys: String, CodingKey {
-        case DictionaryKey1 = "7C436110-AB2A-4BBB-A880-FE41995C9F82"
-        case DictionaryKey2 = "8BE4DF61-93CA-11D2-AA0D-00E098032B8C"
+        case DictionaryKeyNvramLegacySchema1 = "7C436110-AB2A-4BBB-A880-FE41995C9F82"
+        case DictionaryKeyNvramLegacySchema2 = "8BE4DF61-93CA-11D2-AA0D-00E098032B8C"
     }
-    var DictionaryKey1: [String?]?
-    var DictionaryKey2: [String?]?
+    var DictionaryKeyNvramLegacySchema1: [String?]?
+    var DictionaryKeyNvramLegacySchema2: [String?]?
 }
 
 private struct innerSettingsNvramBlock: Codable {
     enum CodingKeys: String, CodingKey {
-        case DictionaryKey1 = "4D1EDE05-38C7-4A6A-9CC6-4BCCA8B38C14"
-        case DictionaryKey2 = "7C436110-AB2A-4BBB-A880-FE41995C9F82"
+        case DictionaryKeyNvramBlock1 = "4D1EDE05-38C7-4A6A-9CC6-4BCCA8B38C14"
+        case DictionaryKeyNvramBlock2 = "7C436110-AB2A-4BBB-A880-FE41995C9F82"
     }
-    var DictionaryKey1: [String?]?
-    var DictionaryKey2: [String?]?
+    var DictionaryKeyNvramBlock1: [String?]?
+    var DictionaryKeyNvramBlock2: [String?]?
 }
 
 private struct innerSettingsNvramAdd: Codable {
     enum CodingKeys: String, CodingKey {
-        case DictionaryKey1 = "4D1EDE05-38C7-4A6A-9CC6-4BCCA8B38C14"
-        case DictionaryKey2 = "7C436110-AB2A-4BBB-A880-FE41995C9F82"
+        case DictionaryKeyNvramAdd1 = "4D1EDE05-38C7-4A6A-9CC6-4BCCA8B38C14"
+        case DictionaryKeyNvramAdd2 = "7C436110-AB2A-4BBB-A880-FE41995C9F82"
     }
-    var DictionaryKey1: innerSettingsNvramAddDictionaryArray1?
-    var DictionaryKey2: innerSettingsNvramAddDictionaryArray2?
+    var DictionaryKeyNvramAdd1: innerSettingsNvramAddDictionaryArray1?
+    var DictionaryKeyNvramAdd2: innerSettingsNvramAddDictionaryArray2?
 }
 
 private struct innerSettingsNvramAddDictionaryArray1: Codable {
@@ -449,23 +449,120 @@ private struct innerSettingsNvramAddDictionaryArray2: Codable {
 
 
 
+// PlatformInfo Dictionary START
+private struct innerSettingsPlatformInfo: Codable {
+    enum CodingKeys: String, CodingKey {
+        case Automatic = "Automatic"
+        case Generic = "Generic"
+        case UpdateDataHub = "UpdateDataHub"
+        case UpdateNVRAM = "UpdateNVRAM"
+        case UpdateSMBIOS = "UpdateSMBIOS"
+        case UpdateSMBIOSMode = "UpdateSMBIOSMode"
+    }
+    var Automatic: Bool?
+    var Generic: innerSettingsPlatformInfoGeneric?
+    var UpdateDataHub: Bool?
+    var UpdateNVRAM: Bool?
+    var UpdateSMBIOS: Bool?
+    var UpdateSMBIOSMode: String?
+}
+
+private struct innerSettingsPlatformInfoGeneric: Codable {
+    enum CodingKeys: String, CodingKey {
+        case MLB = "MLB"
+        case ROM = "ROM"
+        case SpoofVendor = "SpoofVendor"
+        case SystemProductName = "SystemProductName"
+        case SystemSerialNumber = "SystemSerialNumber"
+        case SystemUUID = "SystemUUID"
+    }
+    var MLB: String?
+    var ROM: Data?
+    var SpoofVendor: Bool?
+    var SystemProductName: String?
+    var SystemSerialNumber: String?
+    var SystemUUID: String?
+}
+// PlatformInfo Dictionary FINISH
+
+
+
+
+// UEFI Dictionary START
+private struct innerSettingsUefi: Codable {
+    enum CodingKeys: String, CodingKey {
+        case ConnectDrivers = "ConnectDrivers"
+        case Drivers = "Drivers"
+        case Protocols = "Protocols"
+        case Quirks = "Quirks"
+    }
+    var ConnectDrivers: Bool?
+    var Drivers: [String?]?
+    var Protocols: innerSettingsUefiProtocols?
+    var Quirks: innerSettingsUefiQuirks?
+}
+
+private struct innerSettingsUefiProtocols: Codable {
+    enum CodingKeys: String, CodingKey {
+        case AppleBootPolicy = "AppleBootPolicy"
+        case ConsoleControl = "ConsoleControl"
+        case DataHub = "DataHub"
+        case DeviceProperties = "DeviceProperties"
+    }
+    var AppleBootPolicy: Bool?
+    var ConsoleControl: Bool?
+    var DataHub: Bool?
+    var DeviceProperties: Bool?
+}
+
+private struct innerSettingsUefiQuirks: Codable {
+    enum CodingKeys: String, CodingKey {
+        case AvoidHighAlloc = "AvoidHighAlloc"
+        case ExitBootServicesDelay = "ExitBootServicesDelay"
+        case IgnoreInvalidFlexRatio = "IgnoreInvalidFlexRatio"
+        case IgnoreTextInGraphics = "IgnoreTextInGraphics"
+        case ProvideConsoleGop = "ProvideConsoleGop"
+        case ReleaseUsbOwnership = "ReleaseUsbOwnership"
+        case RequestBootVarRouting = "RequestBootVarRouting"
+        case SanitiseClearScreen = "SanitiseClearScreen"
+    }
+    var AvoidHighAlloc: Bool?
+    var ExitBootServicesDelay: Int?
+    var IgnoreInvalidFlexRatio: Bool?
+    var IgnoreTextInGraphics: Bool?
+    var ProvideConsoleGop: Bool?
+    var ReleaseUsbOwnership: Bool?
+    var RequestBootVarRouting: Bool?
+    var SanitiseClearScreen: Bool?
+}
+// UEFI Dictionary FINISH
+
+
 
 // Root plist task Dictionary
 private struct EntryPoint: Codable {
     enum CodingKeys: String, CodingKey {
+        case WARNING1 = "#WARNING - 1"
+        case WARNING2 = "#WARNING - 2"
         case ACPI = "ACPI"
         case Booter = "Booter"
         case DeviceProperties = "DeviceProperties"
         case Kernel = "Kernel"
         case Misc = "Misc"
         case NVRAM = "NVRAM"
+        case PlatformInfo = "PlatformInfo"
+        case UEFI = "UEFI"
     }
+    var WARNING1: String?
+    var WARNING2: String?
     var ACPI: innerSettingsAcpi?
     var Booter: innerSettingsBooter?
     var DeviceProperties: innerSettingsDeviceProperties?
     var Kernel: innerSettingsKernel?
     var Misc: innerSettingsMisc?
     var NVRAM: innerSettingsNvram?
+    var PlatformInfo: innerSettingsPlatformInfo?
+    var UEFI: innerSettingsUefi?
 }
 
 
