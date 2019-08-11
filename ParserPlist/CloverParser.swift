@@ -1,36 +1,99 @@
 
 import Foundation
 
-private struct InnerSettings_ACPI_Add: Codable {
+// ACPI Dictionary start
+private struct innerSettingsAcpiAdd: Codable {
     enum CodingKeys: String, CodingKey {
-        case CommentKey = "Comment"
-        case EnabledKey = "Enabled"
-        case PathKey = "Path"
-
+        case Comment = "Comment"
+        case Enabled = "Enabled"
+        case Path = "Path"
     }
-
-    var CommentKey: String?
-    var EnabledKey: Bool?
-    var PathKey: String?
+    var Comment: String?
+    var Enabled: Bool?
+    var Path: String?
 }
 
-
-private struct Settings_ACPI: Codable {
+private struct innerSettingsAcpiBlock: Codable {
     enum CodingKeys: String, CodingKey {
-        case Add_array = "Add"
+        case All = "All"
+        case Comment = "Comment"
+        case Enabled = "Enabled"
+        case OemTableId = "OemTableId"
+        case TableLength = "TableLength"
+        case TableSignature = "TableSignature"
     }
-    
-    var Add_array: [InnerSettings_ACPI_Add]?
+    var All: Bool?
+    var Comment: String?
+    var Enabled: Bool?
+    var OemTableId: Data?
+    var TableLength: Int?
+    var TableSignature: Data?
+}
+
+private struct innerSettingsAcpiPatch: Codable {
+    enum CodingKeys: String, CodingKey {
+        case Comment = "Comment"
+        case Count = "Count"
+        case Enabled = "Enabled"
+        case Find = "Find"
+        case Limit = "Limit"
+        case Mask = "Mask"
+        case OemTableId = "OemTableId"
+        case Replace = "Replace"
+        case ReplaceMask = "ReplaceMask"
+        case Skip = "Skip"
+        case TableLength = "TableLength"
+        case TableSignature = "TableSignature"
+    }
+    var Comment: String?
+    var Count: Int?
+    var Enabled: Bool?
+    var Find: Data?
+    var Limit: Int?
+    var Mask: Data?
+    var OemTableId: Data?
+    var Replace: Data?
+    var ReplaceMask: Data?
+    var Skip: Int?
+    var TableLength: Int?
+    var TableSignature: Data?
+}
+
+private struct innerSettingsAcpiQuirks: Codable {
+    enum CodingKeys: String, CodingKey {
+        case FadtEnableReset = "FadtEnableReset"
+        case NormalizeHeaders = "NormalizeHeaders"
+        case RebaseRegions = "RebaseRegions"
+        case ResetHwSig = "ResetHwSig"
+        case ResetLogoStatus = "ResetLogoStatus"
+    }
+    var FadtEnableReset: Bool?
+    var NormalizeHeaders: Bool?
+    var RebaseRegions: Bool?
+    var ResetHwSig: Bool?
+    var ResetLogoStatus: Bool?
+}
+
+private struct acpi: Codable {
+    enum CodingKeys: String, CodingKey {
+        case Add = "Add"
+        case Block = "Block"
+        case Patch = "Patch"
+        case Quirks = "Quirks"
+    }
+    var Add: [innerSettingsAcpiAdd]?
+    var Block: [innerSettingsAcpiBlock]?
+    var Patch: [innerSettingsAcpiPatch]?
+    var Quirks: innerSettingsAcpiQuirks?
 }
 
 
 
 private struct EntryPoint: Codable {
     enum CodingKeys: String, CodingKey {
-        case ACPI_key = "ACPI"
+        case acpi = "ACPI"
     }
-
-    var ACPI_key: Settings_ACPI
+    var acpi: acpi
 }
 
 
@@ -40,7 +103,7 @@ private struct EntryPoint: Codable {
 
 
 
-
+// main class
 
 class CloverParser {
     private var settings: EntryPoint!
@@ -56,9 +119,9 @@ class CloverParser {
         }
     }
 
-//    func editSettingType(str: String) {
-//        self.settings.ACPI_key.Add_array.CommentKey = str
-//    }
+    func editSettingType(str: String) {
+        self.settings.acpi.Add?[0].Comment = str
+    }
 
     func exportTo(output: URL) throws {
         let encoder = PropertyListEncoder()
