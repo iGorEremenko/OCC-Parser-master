@@ -1,7 +1,7 @@
 
 import Foundation
 
-// ACPI Dictionary start
+// ACPI Dictionary START
 private struct innerSettingsAcpiAdd: Codable {
     enum CodingKeys: String, CodingKey {
         case Comment = "Comment"
@@ -74,7 +74,7 @@ private struct innerSettingsAcpiQuirks: Codable {
     var ResetLogoStatus: Bool?
 }
 
-private struct acpi: Codable {
+private struct innerSettingsAcpi: Codable {
     enum CodingKeys: String, CodingKey {
         case Add = "Add"
         case Block = "Block"
@@ -86,14 +86,123 @@ private struct acpi: Codable {
     var Patch: [innerSettingsAcpiPatch]?
     var Quirks: innerSettingsAcpiQuirks?
 }
+// ACPI Dictionary FINISH
 
 
 
+// Booter Dictionary START
+private struct innerSettingsBooter: Codable {
+    enum CodingKeys: String, CodingKey {
+        case Quirks = "Quirks"
+    }
+    var Quirks: innerSettingsBooterQuirks?
+}
+
+private struct innerSettingsBooterQuirks: Codable {
+    enum CodingKeys: String, CodingKey {
+        case AvoidRuntimeDefrag = "AvoidRuntimeDefrag"
+        case DisableVariableWrite = "DisableVariableWrite"
+        case DiscardHibernateMap = "DiscardHibernateMap"
+        case EnableSafeModeSlide = "EnableSafeModeSlide"
+        case EnableWriteUnprotector = "EnableWriteUnprotector"
+        case ForceExitBootServices = "ForceExitBootServices"
+        case ProtectCsmRegion = "ProtectCsmRegion"
+        case ProvideCustomSlide = "ProvideCustomSlide"
+        case SetupVirtualMap = "SetupVirtualMap"
+        case ShrinkMemoryMap = "ShrinkMemoryMap"
+    }
+    var AvoidRuntimeDefrag: Bool?
+    var DisableVariableWrite: Bool?
+    var DiscardHibernateMap: Bool?
+    var EnableSafeModeSlide: Bool?
+    var EnableWriteUnprotector: Bool?
+    var ForceExitBootServices: Bool?
+    var ProtectCsmRegion: Bool?
+    var ProvideCustomSlide: Bool?
+    var SetupVirtualMap: Bool?
+    var ShrinkMemoryMap: Bool?
+}
+// Booter Dictionary FINISH
+
+
+
+
+// DeviceProperties Dictionary START
+private struct innerSettingsDeviceProperties: Codable {
+    enum CodingKeys: String, CodingKey {
+        case Add = "Add"
+        case Block = "Block"
+    }
+    var Add: innerSettingsDevicePropertiesAdd?
+    var Block: innerSettingsDevicePropertiesBlock?
+}
+
+private struct innerSettingsDevicePropertiesBlock: Codable {
+    enum CodingKeys: String, CodingKey {
+        case PciRoot1 = "PciRoot(0x0)/Pci(0x1b,0x0)"
+    }
+    var PciRoot1: [String?]
+}
+
+private struct innerSettingsDevicePropertiesAdd: Codable {
+    enum CodingKeys: String, CodingKey {
+        case PciRoot1 = "PciRoot(0x0)/Pci(0x1b,0x0)"
+        case PciRoot2 = "PciRoot(0x0)/Pci(0x2,0x0)"
+    }
+    var PciRoot1: innerSettingsDevicePropertiesAddPciRoot1?
+    var PciRoot2: innerSettingsDevicePropertiesAddPciRoot2?
+}
+
+private struct innerSettingsDevicePropertiesAddPciRoot1: Codable {
+    enum CodingKeys: String, CodingKey {
+        case layoutId = "layout-id"
+    }
+    var layoutId: Data?
+}
+
+private struct innerSettingsDevicePropertiesAddPciRoot2: Codable {
+    enum CodingKeys: String, CodingKey {
+        case aaplIgPlatformId = "AAPL,ig-platform-id"
+    }
+    var aaplIgPlatformId: Data?
+}
+// DeviceProperties Dictionary FINISH
+
+
+
+
+// Kernel Dictionary START
+private struct innerSettingsKernel: Codable {
+    enum CodingKeys: String, CodingKey {
+        case Add = "Add"
+    }
+    var Add: [innerSettingsKernelAdd]
+}
+
+private struct innerSettingsKernelAdd: Codable {
+    enum CodingKeys: String, CodingKey {
+        case Add = "Add"
+    }
+    var Add: String?
+}
+// Kernel Dictionary FINISH
+
+
+
+
+
+// Root plist task Dictionary
 private struct EntryPoint: Codable {
     enum CodingKeys: String, CodingKey {
-        case acpi = "ACPI"
+        case Acpi = "ACPI"
+        case Booter = "Booter"
+        case DeviceProperties = "DeviceProperties"
+        case Kernel = "Kernel"
     }
-    var acpi: acpi
+    var Acpi: innerSettingsAcpi
+    var Booter: innerSettingsBooter
+    var DeviceProperties: innerSettingsDeviceProperties
+    var Kernel: innerSettingsKernel
 }
 
 
@@ -103,8 +212,7 @@ private struct EntryPoint: Codable {
 
 
 
-// main class
-
+// MAIN CLASS PARSER
 class CloverParser {
     private var settings: EntryPoint!
 
@@ -120,7 +228,7 @@ class CloverParser {
     }
 
     func editSettingType(str: String) {
-        self.settings.acpi.Add?[0].Comment = str
+        self.settings.Acpi.Add?[0].Comment = str
     }
 
     func exportTo(output: URL) throws {

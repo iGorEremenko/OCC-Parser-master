@@ -258,7 +258,6 @@
 			<key>PciRoot(0x0)/Pci(0x1b,0x0)</key>
 			<array>
 				<string>MaximumBootBeepVolume</string>
-				<string>werwerw</string>
 			</array>
 		</dict>
 	</dict>
