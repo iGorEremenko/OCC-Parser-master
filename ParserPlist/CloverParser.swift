@@ -375,7 +375,7 @@ private struct innerSettingsMiscBoot: Codable {
     var HibernateMode: String?
     var HideSelf: Bool?
     var Resolution: String?
-    var ShowPicker: String?
+    var ShowPicker: Bool?
     var Timeout: Int?
     var UsePicker: Bool?
 }
@@ -421,11 +421,18 @@ private struct innerSettingsNvramAdd: Codable {
         case DictionaryKey1 = "4D1EDE05-38C7-4A6A-9CC6-4BCCA8B38C14"
         case DictionaryKey2 = "7C436110-AB2A-4BBB-A880-FE41995C9F82"
     }
-    var DictionaryKey1: [Data?]?
-    var DictionaryKey2: innerSettingsNvramAddDictionaryArray?
+    var DictionaryKey1: innerSettingsNvramAddDictionaryArray1?
+    var DictionaryKey2: innerSettingsNvramAddDictionaryArray2?
 }
 
-private struct innerSettingsNvramAddDictionaryArray: Codable {
+private struct innerSettingsNvramAddDictionaryArray1: Codable {
+    enum CodingKeys: String, CodingKey {
+        case UIScale = "UIScale"
+    }
+    var UIScale: Data?
+}
+
+private struct innerSettingsNvramAddDictionaryArray2: Codable {
     enum CodingKeys: String, CodingKey {
         case bootArgs = "boot-args"
         case csrActiveConfig = "csr-active-config"
@@ -446,19 +453,19 @@ private struct innerSettingsNvramAddDictionaryArray: Codable {
 // Root plist task Dictionary
 private struct EntryPoint: Codable {
     enum CodingKeys: String, CodingKey {
-        case Acpi = "ACPI"
+        case ACPI = "ACPI"
         case Booter = "Booter"
         case DeviceProperties = "DeviceProperties"
         case Kernel = "Kernel"
         case Misc = "Misc"
-        case nvram = "NVRAM"
+        case NVRAM = "NVRAM"
     }
-    var Acpi: innerSettingsAcpi?
+    var ACPI: innerSettingsAcpi?
     var Booter: innerSettingsBooter?
     var DeviceProperties: innerSettingsDeviceProperties?
     var Kernel: innerSettingsKernel?
     var Misc: innerSettingsMisc?
-    var nvram: innerSettingsNvram?
+    var NVRAM: innerSettingsNvram?
 }
 
 
@@ -484,7 +491,7 @@ class CloverParser {
     }
 
     func changeValueStr(str: String) {
-        self.settings.Acpi?.Add?[0].Comment = str
+        self.settings.ACPI?.Add?[0].Comment = str
     }
 
     func exportTo(output: URL) throws {

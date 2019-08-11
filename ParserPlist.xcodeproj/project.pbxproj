@@ -24,7 +24,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4C9DB4F022F4BBA000B38354 /* ParserPlist */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ParserPlist; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C9DB4F322F4BBA000B38354 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		5F7CEE7FEE2AFE9F69D49833 /* CloverParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloverParser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -51,7 +50,6 @@
 		4C9DB4F122F4BBA000B38354 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4C9DB4F022F4BBA000B38354 /* ParserPlist */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -82,7 +80,6 @@
 			);
 			name = ParserPlist;
 			productName = ParserPlist;
-			productReference = 4C9DB4F022F4BBA000B38354 /* ParserPlist */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
