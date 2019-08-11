@@ -1,7 +1,7 @@
 
 import Foundation
 
-private struct InnerSettings: Codable {
+private struct InnerSettings_ACPI_Add: Codable {
     enum CodingKeys: String, CodingKey {
         case CommentKey = "Comment"
         case EnabledKey = "Enabled"
@@ -14,21 +14,33 @@ private struct InnerSettings: Codable {
     var PathKey: String?
 }
 
-private struct Settings: Codable {
+
+private struct Settings_ACPI: Codable {
     enum CodingKeys: String, CodingKey {
-        case arrayType = "Add"
+        case Add_array = "Add"
     }
     
-    var arrayType: [InnerSettings]?
+    var Add_array: [InnerSettings_ACPI_Add]?
 }
+
+
 
 private struct EntryPoint: Codable {
     enum CodingKeys: String, CodingKey {
-        case dictionaryType = "ACPI"
+        case ACPI_key = "ACPI"
     }
 
-    var dictionaryType: Settings
+    var ACPI_key: Settings_ACPI
 }
+
+
+
+
+
+
+
+
+
 
 class CloverParser {
     private var settings: EntryPoint!
@@ -45,7 +57,7 @@ class CloverParser {
     }
 
 //    func editSettingType(str: String) {
-//        self.settings.dictionaryType.stringType = str
+//        self.settings.ACPI_key.Add_array.CommentKey = str
 //    }
 
     func exportTo(output: URL) throws {
