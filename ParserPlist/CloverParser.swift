@@ -3,37 +3,28 @@ import Foundation
 
 private struct InnerSettings: Codable {
     enum CodingKeys: String, CodingKey {
-        case booleanType = "Boolean-type-to-arr"
-        case dataType = "Data-type-to-arr"
-        case numberType = "Number-type-to-arr"
-        case stringType = "String-type-to-arr"
+        case CommentKey = "Comment"
+        case EnabledKey = "Enabled"
+        case PathKey = "Path"
+
     }
 
-    var booleanType: Bool?
-    var dataType: Data?
-    var numberType: Int?
-    var stringType: String?
+    var CommentKey: String?
+    var EnabledKey: Bool?
+    var PathKey: String?
 }
 
 private struct Settings: Codable {
     enum CodingKeys: String, CodingKey {
-        case booleanType = "Boolean-type"
-        case dataType = "Data-type"
-        case numberType = "Number-type"
-        case stringType = "String-type"
-        case arrayType = "Array-type"
+        case arrayType = "Add"
     }
-
-    var booleanType: Bool?
-    var dataType: Data?
-    var numberType: Int?
-    var stringType: String?
+    
     var arrayType: [InnerSettings]?
 }
 
 private struct EntryPoint: Codable {
     enum CodingKeys: String, CodingKey {
-        case dictionaryType = "Dictionary-type"
+        case dictionaryType = "ACPI"
     }
 
     var dictionaryType: Settings
@@ -53,9 +44,9 @@ class CloverParser {
         }
     }
 
-    func editSettingType(str: String) {
-        self.settings.dictionaryType.stringType = str
-    }
+//    func editSettingType(str: String) {
+//        self.settings.dictionaryType.stringType = str
+//    }
 
     func exportTo(output: URL) throws {
         let encoder = PropertyListEncoder()
