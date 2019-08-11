@@ -22,6 +22,7 @@ let outputURL = URL(fileURLWithPath: output)
 
 let parser = try! CloverParser(input: inputURL)
 
-//parser.editSettingType(str: "asdasdasdasd")
+// ***** change Value parser plist type string ***** //
+//parser.changeValueStr(str: "asdasdasdasd")
 
 try! parser.exportTo(output: outputURL)

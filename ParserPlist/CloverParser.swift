@@ -175,15 +175,109 @@ private struct innerSettingsDevicePropertiesAddPciRoot2: Codable {
 private struct innerSettingsKernel: Codable {
     enum CodingKeys: String, CodingKey {
         case Add = "Add"
+        case Block = "Block"
+        case Emulate = "Emulate"
+        case Patch = "Patch"
+        case Quirks = "Quirks"
     }
-    var Add: [innerSettingsKernelAdd]
+    var Add: [innerSettingsKernelAdd]?
+    var Block: [innerSettingsKernelBlock]?
+    var Emulate: innerSettingsKernelEmulate?
+    var Patch: [innerSettingsKernelPatch]?
+    var Quirks: innerSettingsKernelQuirks?
+}
+
+private struct innerSettingsKernelQuirks: Codable {
+    enum CodingKeys: String, CodingKey {
+        case AppleCpuPmCfgLock = "AppleCpuPmCfgLock"
+        case AppleXcpmCfgLock = "AppleXcpmCfgLock"
+        case AppleXcpmExtraMsrs = "AppleXcpmExtraMsrs"
+        case CustomSMBIOSGuid = "CustomSMBIOSGuid"
+        case DisableIoMapper = "DisableIoMapper"
+        case ExternalDiskIcons = "ExternalDiskIcons"
+        case LapicKernelPanic = "LapicKernelPanic"
+        case PanicNoKextDump = "PanicNoKextDump"
+        case ThirdPartyTrim = "ThirdPartyTrim"
+        case XhciPortLimit = "XhciPortLimit"
+    }
+    var AppleCpuPmCfgLock: Bool?
+    var AppleXcpmCfgLock: Bool?
+    var AppleXcpmExtraMsrs: Bool?
+    var CustomSMBIOSGuid: Bool?
+    var DisableIoMapper: Bool?
+    var ExternalDiskIcons: Bool?
+    var LapicKernelPanic: Bool?
+    var PanicNoKextDump: Bool?
+    var ThirdPartyTrim: Bool?
+    var XhciPortLimit: Bool?
+}
+
+private struct innerSettingsKernelPatch: Codable {
+    enum CodingKeys: String, CodingKey {
+        case Base = "Base"
+        case Comment = "Comment"
+        case Count = "Count"
+        case Enabled = "Enabled"
+        case Find = "Find"
+        case Identifier = "Identifier"
+        case Limit = "Limit"
+        case Mask = "Mask"
+        case MatchKernel = "MatchKernel"
+        case Replace = "Replace"
+        case ReplaceMask = "ReplaceMask"
+        case Skip = "Skip"
+    }
+    var Base: String?
+    var Comment: String?
+    var Count: Int?
+    var Enabled: Bool?
+    var Find: Data?
+    var Identifier: String?
+    var Limit: Int?
+    var Mask: Data?
+    var MatchKernel: String?
+    var Replace: Data?
+    var ReplaceMask: Data?
+    var Skip: Int?
+}
+
+private struct innerSettingsKernelEmulate: Codable {
+    enum CodingKeys: String, CodingKey {
+        case Cpuid1Data = "Cpuid1Data"
+        case Cpuid1Mask = "Cpuid1Mask"
+    }
+    var Cpuid1Data: Data?
+    var Cpuid1Mask: Data?
 }
 
 private struct innerSettingsKernelAdd: Codable {
     enum CodingKeys: String, CodingKey {
-        case Add = "Add"
+        case BundlePath = "BundlePath"
+        case Comment = "Comment"
+        case Enabled = "Enabled"
+        case ExecutablePath = "ExecutablePath"
+        case MatchKernel = "MatchKernel"
+        case PlistPath = "PlistPath"
     }
-    var Add: String?
+    var BundlePath: String?
+    var Comment: String?
+    var Enabled: Bool?
+    var ExecutablePath: String?
+    var MatchKernel: String?
+    var PlistPath: String?
+}
+
+private struct innerSettingsKernelBlock: Codable {
+    enum CodingKeys: String, CodingKey {
+        case Comment = "Comment"
+        case Enabled = "Enabled"
+        case Identifier = "Identifier"
+        case MatchKernel = "MatchKernel"
+    }
+    var Comment: String?
+    var Enabled: Bool?
+    var Identifier: String?
+    var MatchKernel: String?
 }
 // Kernel Dictionary FINISH
 
@@ -199,10 +293,10 @@ private struct EntryPoint: Codable {
         case DeviceProperties = "DeviceProperties"
         case Kernel = "Kernel"
     }
-    var Acpi: innerSettingsAcpi
-    var Booter: innerSettingsBooter
-    var DeviceProperties: innerSettingsDeviceProperties
-    var Kernel: innerSettingsKernel
+    var Acpi: innerSettingsAcpi?
+    var Booter: innerSettingsBooter?
+    var DeviceProperties: innerSettingsDeviceProperties?
+    var Kernel: innerSettingsKernel?
 }
 
 
@@ -227,8 +321,8 @@ class CloverParser {
         }
     }
 
-    func editSettingType(str: String) {
-        self.settings.Acpi.Add?[0].Comment = str
+    func changeValueStr(str: String) {
+        self.settings.Acpi?.Add?[0].Comment = str
     }
 
     func exportTo(output: URL) throws {
