@@ -285,6 +285,164 @@ private struct innerSettingsKernelBlock: Codable {
 
 
 
+// Misc Dictionary START
+private struct innerSettingsMisc: Codable {
+    enum CodingKeys: String, CodingKey {
+        case BlessOverride = "BlessOverride"
+        case Boot = "Boot"
+        case Debug = "Debug"
+        case Entries = "Entries"
+        case Security = "Security"
+        case Tools = "Tools"
+    }
+    var BlessOverride: [String?]?
+    var Boot: innerSettingsMiscBoot?
+    var Debug: innerSettingsMiscDebug?
+    var Entries: [innerSettingsMiscEntries]?
+    var Security: innerSettingsMiscSecurity?
+    var Tools: [innerSettingsMiscTools]?
+}
+
+private struct innerSettingsMiscTools: Codable {
+    enum CodingKeys: String, CodingKey {
+        case Comment = "Comment"
+        case Enabled = "Enabled"
+        case Name = "Name"
+        case Path = "Path"
+    }
+    var Comment: String?
+    var Enabled: Bool?
+    var Name: String?
+    var Path: String?
+}
+
+private struct innerSettingsMiscSecurity: Codable {
+    enum CodingKeys: String, CodingKey {
+        case ExposeSensitiveData = "ExposeSensitiveData"
+        case HaltLevel = "HaltLevel"
+        case RequireSignature = "RequireSignature"
+        case RequireVault = "RequireVault"
+        case ScanPolicy = "ScanPolicy"
+    }
+    var ExposeSensitiveData: Int?
+    var HaltLevel: Int?
+    var RequireSignature: Bool?
+    var RequireVault: Bool?
+    var ScanPolicy: Int?
+}
+
+private struct innerSettingsMiscEntries: Codable {
+    enum CodingKeys: String, CodingKey {
+        case Comment = "Comment"
+        case Enabled = "Enabled"
+        case Name = "Name"
+        case Path = "Path"
+    }
+    var Comment: String?
+    var Enabled: Bool?
+    var Name: String?
+    var Path: String?
+}
+
+private struct innerSettingsMiscDebug: Codable {
+    enum CodingKeys: String, CodingKey {
+        case DisableWatchDog = "DisableWatchDog"
+        case DisplayDelay = "DisplayDelay"
+        case DisplayLevel = "DisplayLevel"
+        case Target = "Target"
+    }
+    var DisableWatchDog: Bool?
+    var DisplayDelay: Int?
+    var DisplayLevel: Int?
+    var Target: Int?
+}
+
+private struct innerSettingsMiscBoot: Codable {
+    enum CodingKeys: String, CodingKey {
+        case ConsoleBehaviourOs = "ConsoleBehaviourOs"
+        case ConsoleBehaviourUi = "ConsoleBehaviourUi"
+        case ConsoleMode = "ConsoleMode"
+        case HibernateMode = "HibernateMode"
+        case HideSelf = "HideSelf"
+        case Resolution = "Resolution"
+        case ShowPicker = "ShowPicker"
+        case Timeout = "Timeout"
+        case UsePicker = "UsePicker"
+    }
+    var ConsoleBehaviourOs: String?
+    var ConsoleBehaviourUi: String?
+    var ConsoleMode: String?
+    var HibernateMode: String?
+    var HideSelf: Bool?
+    var Resolution: String?
+    var ShowPicker: String?
+    var Timeout: Int?
+    var UsePicker: Bool?
+}
+// Misc Dictionary FINISH
+
+
+
+
+// NVRAM Dictionary START
+private struct innerSettingsNvram: Codable {
+    enum CodingKeys: String, CodingKey {
+        case Add = "Add"
+        case Block = "Block"
+        case LegacyEnable = "LegacyEnable"
+        case LegacySchema = "LegacySchema"
+    }
+    var Add: innerSettingsNvramAdd?
+    var Block: innerSettingsNvramBlock?
+    var LegacyEnable: Bool?
+    var LegacySchema: innerSettingsNvramLegacySchema?
+}
+
+private struct innerSettingsNvramLegacySchema: Codable {
+    enum CodingKeys: String, CodingKey {
+        case DictionaryKey1 = "7C436110-AB2A-4BBB-A880-FE41995C9F82"
+        case DictionaryKey2 = "8BE4DF61-93CA-11D2-AA0D-00E098032B8C"
+    }
+    var DictionaryKey1: [String?]?
+    var DictionaryKey2: [String?]?
+}
+
+private struct innerSettingsNvramBlock: Codable {
+    enum CodingKeys: String, CodingKey {
+        case DictionaryKey1 = "4D1EDE05-38C7-4A6A-9CC6-4BCCA8B38C14"
+        case DictionaryKey2 = "7C436110-AB2A-4BBB-A880-FE41995C9F82"
+    }
+    var DictionaryKey1: [String?]?
+    var DictionaryKey2: [String?]?
+}
+
+private struct innerSettingsNvramAdd: Codable {
+    enum CodingKeys: String, CodingKey {
+        case DictionaryKey1 = "4D1EDE05-38C7-4A6A-9CC6-4BCCA8B38C14"
+        case DictionaryKey2 = "7C436110-AB2A-4BBB-A880-FE41995C9F82"
+    }
+    var DictionaryKey1: [Data?]?
+    var DictionaryKey2: innerSettingsNvramAddDictionaryArray?
+}
+
+private struct innerSettingsNvramAddDictionaryArray: Codable {
+    enum CodingKeys: String, CodingKey {
+        case bootArgs = "boot-args"
+        case csrActiveConfig = "csr-active-config"
+        case nvdaDrv = "nvda_drv"
+        case prevLangKbd = "prev-lang:kbd"
+    }
+    var bootArgs: String?
+    var csrActiveConfig: Data?
+    var nvdaDrv: Data?
+    var prevLangKbd: Data?
+}
+// NVRAM Dictionary FINISH
+
+
+
+
+
 // Root plist task Dictionary
 private struct EntryPoint: Codable {
     enum CodingKeys: String, CodingKey {
@@ -292,11 +450,15 @@ private struct EntryPoint: Codable {
         case Booter = "Booter"
         case DeviceProperties = "DeviceProperties"
         case Kernel = "Kernel"
+        case Misc = "Misc"
+        case nvram = "NVRAM"
     }
     var Acpi: innerSettingsAcpi?
     var Booter: innerSettingsBooter?
     var DeviceProperties: innerSettingsDeviceProperties?
     var Kernel: innerSettingsKernel?
+    var Misc: innerSettingsMisc?
+    var nvram: innerSettingsNvram?
 }
 
 
